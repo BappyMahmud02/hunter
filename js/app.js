@@ -37,7 +37,9 @@ const displayPhones = (phones, dataLimit) => {
                 <h5 class="card-title">${phones.phone_name}</h5>
                 <p class="card-text">This is a longer card with supporting text below as a natural
                     lead-in to additional content. This content is a little bit longer.</p>
-                    <button onclick="loadPhoneDetails('${phones.slug}')" href ="#" class="btn btn-primary">show details</button>
+                    <button onclick="loadPhoneDetails('${phones.slug}')" href ="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#phoneDetailModal">show details</button>
+                    
+                    
 
             </div>
         </div>
@@ -68,7 +70,7 @@ document.getElementById('search-field').addEventListener('keypress', function(e)
 })
 
 
-const toggleSpinner = isLoading => {
+const toggleSpinner = isLoading => {0.
     const loaderSection = document.getElementById('loader')
     if(isLoading){
         loaderSection.classList.remove('d-none')
@@ -88,6 +90,16 @@ const loadPhoneDetails = async id =>{
     const URL = ` https://openapi.programming-hero.com/api/phone/${id}`
     const res = await fetch(URL) ;
     const data = await res.json() ;
-    console.log(data.data);
+    displayPhoneDetails(data.data);
 }
-// loadPhones()
+
+const displayPhoneDetails = phone =>{
+    console.log(phone);
+    const modalTitle = document.getElementById('phoneDetailModalLabel')
+    modalTitle.innerText = phone.name;
+    const phoneDetails = document.getElementById("phone-details") ;
+    phoneDetails.innerHTML = `
+    <p> Relase date ${phone.releaseDate} </p>
+    `
+}
+loadPhones('apple')
